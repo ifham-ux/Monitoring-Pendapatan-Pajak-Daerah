@@ -1,210 +1,317 @@
 import 'package:flutter/material.dart';
-import 'package:testing/Models/post.dart';
-import 'package:testing/Services/api_service.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+
+import 'package:testing/Models/listsppt.dart';
+import 'package:testing/Models/listkecamatan.dart';
+
+import 'activity_page.dart';
+import 'kecamatan_page.dart';
+
+
+import '../Services/api_service.dart';
+
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+  final Function(int)? onNavigate;
+
+  const DashboardPage({
+    super.key,
+    this.onNavigate,
+  });
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  List<Post> data = [];
-  bool isLoading = true;
-  String? errorMessage;
+    List<listkecamatan> kecamatan = [];
 
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
+    List<FlSpot> chartSpots = []; 
 
-  Future<void> fetchData() async {
-    try {
-      if (!mounted) return;
+    bool isLoading = false;
 
+    Future<void> loadSpptChart() async {
+      try {
+        final result = await ApiService.fetchListSppt(2025,"51","1", "", "", "", 100, 0);
+
+        // Store total per month
+        Map<String, double> monthlyTotals = {};
+
+        for (var item in result) {
+          final month = item.tglTerbitSppt;
+
+          monthlyTotals[month] =
+              (monthlyTotals[month] ?? 0) +
+              item.pbbYangHarusDibayarSppt.toDouble();
+        }
+
+        // Month order
+        final months = [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ];
+
+        // Convert into chart spots
+        final spots = <FlSpot>[];
+
+        for (int i = 0; i < months.length; i++) {
+          final month = months[i];
+
+          spots.add(
+            FlSpot(
+              i.toDouble(),
+              monthlyTotals[month] ?? 0,
+            ),
+          );
+        }
+
+        setState(() {
+          chartSpots = spots;
+        });
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
+
+
+    Future<void> loadKecamatan() async {
       setState(() {
         isLoading = true;
-        errorMessage = null;
       });
 
-      const payload = {
-        "json": {
-          "kdPropinsi": "51",
-          "limit": 10,
-          "offset": 0
-        }
-      };
+      try {
+        final result = await ApiService.fetchKecamatan("51", "71");
 
-      final result = await ApiService.fetchData(payload: payload);
+        setState(() {
+          kecamatan = result;
+        });
+      } catch (e) {
+        debugPrint(e.toString());
+      } finally {
 
-      if (!mounted) return;
-
-      setState(() {
-        data = result;
-        isLoading = false;
-        errorMessage = null;
-      });
-
-      print("Fetched ${result.length} items successfully");
-    } catch (e) {
-      if (!mounted) return;
-
-      final errorMsg = e.toString().replaceFirst('Exception: ', '');
-
-      setState(() {
-        data = [];
-        isLoading = false;
-        errorMessage = errorMsg;
-      });
-
-      print("Error fetching data: $e");
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: isLoading
-            ? const Center(
-                child: CircularProgressIndicator(color: Colors.blue),
-              )
-            : errorMessage != null
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.error_outline,
-                              color: Colors.red, size: 48),
-                          const SizedBox(height: 16),
-                          Text(
-                            "Error",
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            errorMessage!,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.red,
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          ElevatedButton.icon(
-                            onPressed: fetchData,
-                            icon: const Icon(Icons.refresh),
-                            label: const Text("Retry"),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                            ),
-                          ),
-                        ],
+    @override
+    void initState() {
+      super.initState();
+      loadKecamatan();
+      loadSpptChart();
+    }
+
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        backgroundColor: Color(0xFF000000),
+
+        body: isLoading
+          ? const Center(
+            child: CircularProgressIndicator(),
+          )
+          : Column(
+          children: [
+
+            Container(
+              height: 95,
+              margin: EdgeInsets.only(
+                right: 25,
+                left: 25,
+                top: 15,
+                bottom: 5
+              ),
+
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          color: Color(0xFF222425),
+                        ),
                       ),
                     ),
-                  )
-                : data.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.inbox_outlined,
-                                color: Colors.white54, size: 48),
-                            const SizedBox(height: 16),
-                            const Text(
-                              "No data found",
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 16,
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            ElevatedButton.icon(
-                              onPressed: fetchData,
-                              icon: const Icon(Icons.refresh),
-                              label: const Text("Refresh"),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : RefreshIndicator(
-                        onRefresh: fetchData,
-                        color: Colors.blue,
-                        backgroundColor: Colors.grey.shade900,
-                        child: ListView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: data.length,
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          itemBuilder: (context, index) {
-                            final item = data[index];
+                    
+                    SizedBox(width: 20),
 
-                            return Card(
-                              color: Colors.grey.shade900,
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 6,
-                              ),
-                              child: ListTile(
-                                contentPadding: const EdgeInsets.all(12),
-                                leading: CircleAvatar(
-                                  backgroundColor: Colors.blue,
-                                  child: Text(
-                                    "${index + 1}",
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                                title: Text(
-                                  item.nmWpSppt,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                subtitle: Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Kecamatan: ${item.kdKecamatan}",
-                                        style: const TextStyle(
-                                          color: Colors.white70,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        item.jalanOp,
-                                        style: const TextStyle(
-                                          color: Colors.white70,
-                                          fontSize: 12,
-                                        ),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          color: Color(0xFF222425),
                         ),
                       ),
-      ),
-    );
+                    ),
+                  ],
+                ),
+              ),
+   
+
+            AspectRatio(
+              aspectRatio: 24/16,
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 25,
+                  vertical: 20
+                  ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+
+                child: LineChart(
+                    LineChartData(
+                      lineBarsData: [
+                        LineChartBarData(
+                          spots: chartSpots,
+                          isCurved: true,
+                          barWidth: 2,
+                          
+                        ),
+                      ],
+                    ),
+                  ),
+
+              ),
+            ),
+
+            SizedBox(height: 7),
+
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Divider(
+                      color: Color(0xFF797979),
+                      thickness: 2,
+                    ),
+                  ),
+
+                  
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 13),
+                  ),
+
+                  GestureDetector(
+
+        onTap: () {
+
+            widget.onNavigate?.call(1);
+          
+        },
+
+        child: Row(
+          children: [
+
+            Text(
+              'View All',
+
+              style: TextStyle(
+                fontFamily: 'PlusJakartaSans',
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 25,
+                right: 2,
+              ),
+
+              child: SvgPicture.asset(
+                'assets/iconImage/right.svg',
+                width: 16,
+                height: 14,
+              ),
+            ),
+          ],
+        ),
+                  ),
+                    
+                    
+                ],
+              ),
+            ),
+
+            SizedBox(height: 12),
+
+            
+            SizedBox(
+                  height: 275,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: kecamatan.length,
+                    itemBuilder: (context, index) {
+                      final item = kecamatan[index];
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 25,
+                          vertical: 10
+                        ),
+
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+
+                              MaterialPageRoute(
+                                builder: (context) => KecamatanPage(
+                                  kdPropinsi: "51",
+                                  kdDati2: "71",
+                                  kdKecamatan: item.kdKecamatan,
+                                  nmKecamatan: item.nmKecamatan,
+                                )
+                              )
+                            );
+                          },
+
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                              left: 10,
+                              right: 10,
+                              bottom: 58
+                              ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color(0xFF222425)
+                              
+                            ),
+                            child: ListTile(
+                              title: Text(
+                                item.nmKecamatan,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'PlusJakartaSans'
+                                  ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                
+              ),
+            
+        ],
+      )
+      );
+    }
   }
-}

@@ -38,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF000000),
       resizeToAvoidBottomInset: false,
 
       body: Stack(
@@ -56,11 +57,11 @@ class _LoginPageState extends State<LoginPage> {
           ),
 
           AnimatedPadding(
-            duration: Duration(milliseconds: 30),
+            duration: Duration(milliseconds: 20),
 
             padding: EdgeInsets.only(
               bottom: MediaQuery.of(context).viewInsets.bottom > 0
-              ? MediaQuery.of(context).viewInsets.bottom * 0.53
+              ? MediaQuery.of(context).viewInsets.bottom * 0.52
               : 0,
             ),
 

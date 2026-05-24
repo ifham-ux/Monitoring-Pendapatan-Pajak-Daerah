@@ -22,16 +22,14 @@ class _DashboardShellState extends State<DashboardShell> {
     'Settings',
   ];
 
-  final pages = [
-    DashboardPage(),
-    ActivityPage(),
-    CalculatorPage(),
-    SettingsPage(),
-  ];
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF000000),
+      
+
       appBar: AppBar(
         automaticallyImplyLeading: false,
 
@@ -66,9 +64,26 @@ class _DashboardShellState extends State<DashboardShell> {
 
       
       body: IndexedStack(
-        index: currentIndex,
-        children: pages,
-      ),
+  index: currentIndex,
+
+  children: [
+
+    DashboardPage(
+      onNavigate: (index) {
+
+        setState(() {
+          currentIndex = index;
+        });
+      },
+    ),
+
+    ActivityPage(),
+
+    CalculatorPage(),
+
+    SettingsPage(),
+  ],
+),
 
       
       bottomNavigationBar: Theme(
