@@ -7,18 +7,13 @@ import (
 	"net/http"
 )
 
-type ListDetailsRequestBody struct {
+type Dati2RequestBody struct {
 	Json struct {
-		KdPropinsi  string `json:"kdPropinsi"`
-		KdDati2     string `json:"kdDati2"`
-		KdKecamatan string `json:"kdKecamatan"`
-		KdKelurahan string `json:"kdKelurahan"`
-		Limit       int    `json:"limit"`
-		Offset      int    `json:"offset"`
+		KdPropinsi string `json:"kdPropinsi"`
 	} `json:"json"`
 }
 
-func GetListDetails(w http.ResponseWriter, r *http.Request) {
+func GetDati2(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -33,7 +28,7 @@ func GetListDetails(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var reqBody ListDetailsRequestBody
+	var reqBody Dati2RequestBody
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
@@ -41,12 +36,7 @@ func GetListDetails(w http.ResponseWriter, r *http.Request) {
 
 	payload := map[string]interface{}{
 		"json": map[string]interface{}{
-			"kdPropinsi":  reqBody.Json.KdPropinsi,
-			"kdDati2":     reqBody.Json.KdDati2,
-			"kdKecamatan": reqBody.Json.KdKecamatan,
-			"kdKelurahan": reqBody.Json.KdKelurahan,
-			"limit":       reqBody.Json.Limit,
-			"offset":      reqBody.Json.Offset,
+			"kdPropinsi": reqBody.Json.KdPropinsi,
 		},
 	}
 
@@ -57,7 +47,7 @@ func GetListDetails(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resp, err := http.Post(
-		"https://simpbb.technosmart.id/api/rpc/objekPajak/listDetails",
+		"https://simpbb.technosmart.id/api/rpc/wilayah/listDati2",
 		"application/json",
 		bytes.NewBuffer(jsonData),
 	)

@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-type KecamatanRequesetBody struct {
+type KecamatanRequestBody struct {
 	Json struct {
 		KdPropinsi string `json:"kdPropinsi"`
 		KdDati2    string `json:"kdDati2"`
@@ -29,14 +29,14 @@ func GetKecamatan(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var reqBody KecamatanRequesetBody
+	var reqBody KecamatanRequestBody
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
 	}
 
 	payload := map[string]interface{}{
-		"json": map[string]string{
+		"json": map[string]interface{}{
 			"kdPropinsi": reqBody.Json.KdPropinsi,
 			"kdDati2":    reqBody.Json.KdDati2,
 		},

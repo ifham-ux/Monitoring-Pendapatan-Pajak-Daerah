@@ -37,7 +37,7 @@ func GetKelurahan(w http.ResponseWriter, r *http.Request) {
 	}
 
 	payload := map[string]interface{}{
-		"json": map[string]string{
+		"json": map[string]interface{}{
 			"kdPropinsi":  reqBody.Json.KdPropinsi,
 			"kdDati2":     reqBody.Json.KdDati2,
 			"kdKecamatan": reqBody.Json.KdKecamatan,
