@@ -4,6 +4,7 @@ import (
 	"backend/handlers"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -19,6 +20,12 @@ func main() {
 	http.HandleFunc("/sppt/list", handlers.GetSPPT)
 	http.HandleFunc("/sppt/get", handlers.GetTahunSPPT)
 
-	log.Println("Server is running on :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Printf("Server is running on :%s", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
+
 }
