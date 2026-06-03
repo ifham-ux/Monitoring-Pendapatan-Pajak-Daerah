@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=D:\codes\MobApps\flutter
-FLUTTER_APPLICATION_PATH=D:\codes\MobApps\project_2\monitoring_pendapatan_pajak_daerah
+FLUTTER_ROOT=C:\src\flutter
+FLUTTER_APPLICATION_PATH=C:\Learn Dart\SIMPBB\application
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_TARGET=lib\main.dart
 FLUTTER_BUILD_DIR=build

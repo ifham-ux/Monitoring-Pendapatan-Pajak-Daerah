@@ -1,0 +1,18 @@
+# Flutter/Dart generated files
+**/build/
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+
+# Flutter ephemeral/generated
+**/ios/Flutter/ephemeral/
+**/macos/Flutter/ephemeral/
+**/linux/flutter/ephemeral/
+**/windows/flutter/ephemeral/
+
+# Local config
+**/android/local.properties
+
+# IDE
+.idea/
+.vscode/

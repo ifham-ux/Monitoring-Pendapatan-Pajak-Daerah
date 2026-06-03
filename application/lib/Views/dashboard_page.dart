@@ -20,44 +20,31 @@ class _DashboardPageState extends State<DashboardPage> {
     });
 
     try {
-      final dashboardResult =
-        await DashboardService.loadDashboardData(
-          state.selectedYear,
-        );
+      final dashboardResult = await DashboardService.loadDashboardData(
+        state.selectedYear,
+      );
 
-    final kecamatanResult =
-        await DashboardService.loadKecamatanOverview(
-          state.selectedYear,
-        );
-
+      final kecamatanResult = await DashboardService.loadKecamatanOverview(
+        state.selectedYear,
+      );
 
       setState(() {
-        state.chartData =
-      dashboardResult["chartData"];
+        state.chartData = dashboardResult["chartData"];
 
-      state.totalWajibPajak =
-          dashboardResult["totalWajibPajak"];
+        state.totalWajibPajak = dashboardResult["totalWajibPajak"];
 
-      state.totalSudahBayar =
-          dashboardResult["totalSudahBayar"];
+        state.totalSudahBayar = dashboardResult["totalSudahBayar"];
 
-      state.percentage =
-          dashboardResult["percentage"];
+        state.percentage = dashboardResult["percentage"];
 
-      state.kecamatan =
-          kecamatanResult["kecamatan"];
+        state.kecamatan = kecamatanResult["kecamatan"];
 
-      state.totalSudahBayarMap =
-          kecamatanResult["totalSudahBayarMap"];
+        state.totalSudahBayarMap = kecamatanResult["totalSudahBayarMap"];
 
-      state.totalWajibPajakMap =
-          kecamatanResult["totalWajibPajakMap"];
+        state.totalWajibPajakMap = kecamatanResult["totalWajibPajakMap"];
 
-      state.percentageMap =
-          kecamatanResult["percentageMap"];
-
+        state.percentageMap = kecamatanResult["percentageMap"];
       });
-
     } finally {
       if (!mounted) return;
       setState(() {
@@ -80,12 +67,8 @@ class _DashboardPageState extends State<DashboardPage> {
       body: SafeArea(
         child: Column(
           children: [
-
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 12,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               child: Row(
                 children: state.years.map((year) {
                   final isSelected = state.selectedYear == year;
@@ -133,258 +116,246 @@ class _DashboardPageState extends State<DashboardPage> {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: state.isLoading
-                ? DashboardShimmer()
-                : SingleChildScrollView(
-                  child: Column(
-                    children: [
+                    ? DashboardShimmer()
+                    : SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 16),
 
-                      const SizedBox(height: 16),
+                            DashboardLineChart(data: state.chartData),
 
-                      DashboardLineChart(
-                        data: state.chartData,
-                      ),
+                            const SizedBox(height: 19),
 
-                      const SizedBox(height: 19),
-
-                      Row(
-                        children: [
-
-                          Expanded(
-                            child: Container(
-                              height: 110,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 12,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.blackThree,
-                                borderRadius: BorderRadius.circular(8),
-                              
-                              ),
-                              child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        'Persentase Target (Semua Kecamatan)',
-                                        style: const TextStyle(
-                                          color: AppColors.whiteOne,
-                                          fontFamily: 'PlusJakartaSans',
-                                          fontSize: 11,
-                                        ),
-
-                                      ),
-                                    ),
-
-                                    Spacer(),
-
-                                    Align(
-                                      alignment: Alignment.bottomRight,
-
-                                      child: ShaderMask(
-                                      shaderCallback: (bounds) {
-                                        return getPercentageGradient(
-                                          state.percentage,
-                                        ).createShader(bounds);
-                                      },
-                                    
-                                      child: Text(
-                                        '${state.percentage.toStringAsFixed(1)} %',
-                                        style: TextStyle(
-                                          color: AppColors.whiteOne,
-                                          fontSize: 20,
-                                          fontFamily: 'PlusJakartaSans'
-                                        ),
-                                      ),
-                                    ),
-                                      
-                                    )
-                                  ],
-                                ),
-                            ),
-                          ),
-
-                          SizedBox(width: 12),
-
-                          Expanded(
-                            child: Container(
-                              height: 110,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 12,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.blackThree,
-                                borderRadius: BorderRadius.circular(8)
-                              ),
-                              child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        'Sudah Bayar terhadap total Wajib Pajak (Semua Kecamatan) ',
-                                        style: const TextStyle(
-                                          color: AppColors.whiteOne,
-                                          fontSize: 11,
-                                          fontFamily: 'PlusJakartaSans',
-                                        ),
-
-                                      ),
-                                    ),
-
-                                    Spacer(),
-
-                                    Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: Text(
-                                        '${state.totalSudahBayar}/ ${state.totalWajibPajak}',
-                                        style: const TextStyle(
-                                          color: AppColors.whiteOne,
-                                          fontFamily: 'PlusJakartaSans',
-                                          fontSize: 20,
-                                        ),
-
-                                      )
-                                    )
-                                  ],
-                                ),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(height: 26),
-
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 2,
-                              color: AppColors.whiteThree,
-                            ),
-                          ),
-
-                          SizedBox(width: 20),
-
-                          Text(
-                            'Progress Summary',
-                            style: const TextStyle(
-                              color: AppColors.whiteThree,
-                              fontFamily: 'PlusJakartaSans',
-                              fontSize: 18,
-                            ),
-                          )
-                        ],
-                      ),
-
-
-                      SizedBox(height: 23),
-
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: state.kecamatan.length,
-                        itemBuilder: (context, index) {
-
-                          final item = state.kecamatan[index];
-
-                          final sudahBayar =
-                              state.totalSudahBayarMap[item.kdKecamatan] ?? 0;
-
-                          final wajibPajak =
-                              state.totalWajibPajakMap[item.kdKecamatan] ?? 0;
-
-                          final percentage =
-                              state.percentageMap[item.kdKecamatan] ?? 0;
-
-                          return Container(
-                            margin: const EdgeInsets.only(
-                              bottom: 14,
-                            ),
-
-                            padding: const EdgeInsets.all(16),
-
-                            decoration: BoxDecoration(
-                              color: AppColors.blackThree,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-
-                            child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-
+                            Row(
                               children: [
-
-                                Row(
-                                  children: [
-                                   Text(
-                                        item.nmKecamatan,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontFamily: 'PlusJakartaSans'
-                                        ),
-                                      ),
-
-                                      Spacer(),
-                                    
-
-                                    ShaderMask(
-                                      shaderCallback: (bounds) {
-                                        return getPercentageGradient(
-                                          percentage,
-                                        ).createShader(bounds);
-                                      },
-                                    
-                                      child: Text(
-                                        '${percentage.toStringAsFixed(1)} %',
-                                        style: TextStyle(
-                                          color: AppColors.whiteOne,
-                                          fontSize: 20,
-                                          fontFamily: 'PlusJakartaSans'
-                                        ),
-                                      ),
+                                Expanded(
+                                  child: Container(
+                                    height: 110,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 12,
                                     ),
-                                  ],
-                                ),
-
-                                const SizedBox(height: 10),
-                                
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(30),
-                                  child:SizedBox(
-                                    height: 6,
-                                    child: LinearProgressIndicator(
-                                      value: percentage / 100,
-
-                                      color: AppColors.whiteOne,
-                                      backgroundColor:
-                                          AppColors.whiteThree,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.blackThree,
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
+                                    child: Column(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            'Persentase Target (Semua Kecamatan)',
+                                            style: const TextStyle(
+                                              color: AppColors.whiteOne,
+                                              fontFamily: 'PlusJakartaSans',
+                                              fontSize: 11,
+                                            ),
+                                          ),
+                                        ),
 
+                                        Spacer(),
+
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+
+                                          child: ShaderMask(
+                                            shaderCallback: (bounds) {
+                                              return getPercentageGradient(
+                                                state.percentage,
+                                              ).createShader(bounds);
+                                            },
+
+                                            child: Text(
+                                              '${state.percentage.toStringAsFixed(1)} %',
+                                              style: TextStyle(
+                                                color: AppColors.whiteOne,
+                                                fontSize: 22,
+                                                fontFamily: 'PlusJakartaSans',
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
 
-                                const SizedBox(height: 15),
+                                SizedBox(width: 12),
 
-                                Text(
-                                  "$sudahBayar / $wajibPajak Wajib Pajak",
-                                  style: const TextStyle(
-                                    color: AppColors.whiteTwo,
-                                    fontFamily: 'PlusJakartaSans'
+                                Expanded(
+                                  child: Container(
+                                    height: 110,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 12,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.blackThree,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            'Sudah Bayar terhadap total Wajib Pajak (Semua Kecamatan) ',
+                                            style: const TextStyle(
+                                              color: AppColors.whiteOne,
+                                              fontSize: 11,
+                                              fontFamily: 'PlusJakartaSans',
+                                            ),
+                                          ),
+                                        ),
+
+                                        Spacer(),
+
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: Text(
+                                            '${state.totalSudahBayar}/ ${state.totalWajibPajak}',
+                                            style: const TextStyle(
+                                              color: AppColors.whiteOne,
+                                              fontFamily: 'PlusJakartaSans',
+                                              fontSize: 22,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                          );
-                        },
-                      ),
 
-                      SizedBox(height: 60),
-                    ],
-                  ),
-                ),
-              )
+                            SizedBox(height: 26),
+
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Divider(
+                                    thickness: 2,
+                                    color: AppColors.whiteThree,
+                                  ),
+                                ),
+
+                                SizedBox(width: 20),
+
+                                Text(
+                                  'Progress Summary',
+                                  style: const TextStyle(
+                                    color: AppColors.whiteThree,
+                                    fontFamily: 'PlusJakartaSans',
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(height: 23),
+
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: state.kecamatan.length,
+                              itemBuilder: (context, index) {
+                                final item = state.kecamatan[index];
+
+                                final sudahBayar =
+                                    state.totalSudahBayarMap[item
+                                        .kdKecamatan] ??
+                                    0;
+
+                                final wajibPajak =
+                                    state.totalWajibPajakMap[item
+                                        .kdKecamatan] ??
+                                    0;
+
+                                final percentage =
+                                    state.percentageMap[item.kdKecamatan] ?? 0;
+
+                                return Container(
+                                  margin: const EdgeInsets.only(bottom: 14),
+
+                                  padding: const EdgeInsets.all(16),
+
+                                  decoration: BoxDecoration(
+                                    color: AppColors.blackThree,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            item.nmKecamatan,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontFamily: 'PlusJakartaSans',
+                                            ),
+                                          ),
+
+                                          Spacer(),
+
+                                          ShaderMask(
+                                            shaderCallback: (bounds) {
+                                              return getPercentageGradient(
+                                                percentage,
+                                              ).createShader(bounds);
+                                            },
+
+                                            child: Text(
+                                              '${percentage.toStringAsFixed(1)} %',
+                                              style: TextStyle(
+                                                color: AppColors.whiteOne,
+                                                fontSize: 20,
+                                                fontFamily: 'PlusJakartaSans',
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+                                      const SizedBox(height: 10),
+
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(30),
+                                        child: SizedBox(
+                                          height: 6,
+                                          child: LinearProgressIndicator(
+                                            value: percentage / 100,
+
+                                            color: AppColors.whiteOne,
+                                            backgroundColor:
+                                                AppColors.whiteThree,
+                                          ),
+                                        ),
+                                      ),
+
+                                      const SizedBox(height: 15),
+
+                                      Text(
+                                        "$sudahBayar / $wajibPajak Wajib Pajak",
+                                        style: const TextStyle(
+                                          color: AppColors.whiteTwo,
+                                          fontFamily: 'PlusJakartaSans',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+
+                            SizedBox(height: 60),
+                          ],
+                        ),
+                      ),
+              ),
             ),
           ],
         ),

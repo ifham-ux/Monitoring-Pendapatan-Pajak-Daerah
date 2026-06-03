@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Wajib untuk Android 13+ (API 33+) agar dialog izin notifikasi muncul -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <!-- Dibutuhkan flutter_local_notifications untuk notifikasi dengan vibrasi -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <application
         android:label="PBB Monitor"
         android:name="${applicationName}"
