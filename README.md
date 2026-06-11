@@ -113,37 +113,6 @@ Aplikasi ini dikembangkan sebagai **Mobile Dashboard Eksekutif** yang memungkink
 
 ---
 
-## Screenshot Aplikasi
-
-<p align="center">
-  <img src="documents/images/login.jpeg" width="180">
-  <img src="documents/images/dashboard.jpeg" width="180">
-  <img src="documents/images/activity1.jpeg" width="180">
-  <img src="documents/images/overdue.jpeg" width="180">
-</p>
-
----
-
-## Video Demonstrasi
-
-Video demonstrasi menampilkan:
-
-* Login aplikasi
-* Dashboard KPI
-* GIS Monitoring
-* Activity Monitoring
-* Push Notification
-* Kalkulator Tarif
-* Caching menggunakan Hive
-
-### Link Video
-
-```text
-https://youtube.com/shorts/8T6sRz6BsO8
-```
-
----
-
 ## Struktur Repository
 
 ```text
@@ -199,6 +168,37 @@ lib/
 * Hive Local Storage
 * Performance Optimization
 * Final Stabilization
+
+---
+
+## Screenshot Aplikasi
+
+<p align="center">
+  <img src="documents/images/login.jpeg" width="180">
+  <img src="documents/images/dashboard.jpeg" width="180">
+  <img src="documents/images/activity1.jpeg" width="180">
+  <img src="documents/images/overdue.jpeg" width="180">
+</p>
+
+---
+
+## Video Demonstrasi
+
+Video demonstrasi menampilkan:
+
+* Login aplikasi
+* Dashboard KPI
+* GIS Monitoring
+* Activity Monitoring
+* Push Notification
+* Kalkulator Tarif
+* Caching menggunakan Hive
+
+### Link Video
+
+```text
+https://youtube.com/shorts/8T6sRz6BsO8
+```
 
 ---
 
