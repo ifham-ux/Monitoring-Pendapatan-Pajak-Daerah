@@ -117,19 +117,19 @@ Aplikasi ini dikembangkan sebagai **Mobile Dashboard Eksekutif** yang memungkink
 
 ### Login Page
 
-![Login](docs/images/login.jpeg)
+![Login](documents/images/login.jpeg)
 
 ### Dashboard
 
-![Dashboard](docs/images/dashboard.jpeg)
+![Dashboard](documents/images/dashboard.jpeg)
 
 ### Activity Monitoring
 
-![Activity](docs/images/activity1.jpeg)
+![Activity](documents/images/activity1.jpeg)
 
 ### GIS & Monitoring
 
-![Overdue](docs/images/overdue.jpeg)
+![Overdue](documents/images/overdue.jpeg)
 
 ---
 
