@@ -115,14 +115,9 @@ Aplikasi ini dikembangkan sebagai **Mobile Dashboard Eksekutif** yang memungkink
 
 ## Screenshot Aplikasi
 
-## 📱 Screenshot Aplikasi
-
 <p align="center">
   <img src="documents/images/login.jpeg" width="180">
   <img src="documents/images/dashboard.jpeg" width="180">
-</p>
-
-<p align="center">
   <img src="documents/images/activity1.jpeg" width="180">
   <img src="documents/images/overdue.jpeg" width="180">
 </p>
