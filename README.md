@@ -1,4 +1,4 @@
-# Monitoring Pendapatan Pajak Daerah (PBB)
+# Monitoring Pendapatan Pajak Bumi dan Bangunan (PBB)
 
 Mobile Executive Dashboard untuk monitoring realisasi Pajak Bumi dan Bangunan (PBB) berbasis Flutter yang terintegrasi dengan sistem SimPBB melalui backend Go dan protokol oRPC.
 
