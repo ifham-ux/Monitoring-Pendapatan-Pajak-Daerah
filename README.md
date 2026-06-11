@@ -4,7 +4,7 @@ Mobile Executive Dashboard untuk monitoring realisasi Pajak Bumi dan Bangunan (P
 
 ---
 
-## 📖 Deskripsi Proyek
+## Deskripsi Proyek
 
 Badan Pendapatan Daerah (Bapenda) membutuhkan sarana pemantauan realisasi Pajak Bumi dan Bangunan (PBB) yang dapat diakses secara fleksibel melalui perangkat mobile.
 
@@ -12,7 +12,7 @@ Aplikasi ini dikembangkan sebagai **Mobile Dashboard Eksekutif** yang memungkink
 
 ---
 
-## 👥 Tim Pengembang
+## Tim Pengembang
 
 | Nama                   | NIM                 |
 | ---------------------- | ------------------- |
@@ -22,7 +22,7 @@ Aplikasi ini dikembangkan sebagai **Mobile Dashboard Eksekutif** yang memungkink
 
 ---
 
-## 🎯 Fitur Utama
+## Fitur Utama
 
 ### Executive Dashboard
 
@@ -61,7 +61,7 @@ Aplikasi ini dikembangkan sebagai **Mobile Dashboard Eksekutif** yang memungkink
 
 ---
 
-## 🏗️ Arsitektur Sistem
+## Arsitektur Sistem
 
 ```text
 ┌─────────────────┐
@@ -113,7 +113,7 @@ Aplikasi ini dikembangkan sebagai **Mobile Dashboard Eksekutif** yang memungkink
 
 ---
 
-## 📱 Screenshot Aplikasi
+## Screenshot Aplikasi
 
 ### Login Page
 
@@ -133,7 +133,7 @@ Aplikasi ini dikembangkan sebagai **Mobile Dashboard Eksekutif** yang memungkink
 
 ---
 
-## 🎥 Video Demonstrasi
+## Video Demonstrasi
 
 Video demonstrasi menampilkan:
 
@@ -155,11 +155,11 @@ https://youtu.be/VIDEO_DEMO_FINAL
 
 ---
 
-## 📂 Struktur Repository
+## Struktur Repository
 
 ```text
 lib/
-├── pages/
+├── Views/
 │   ├── login/
 │   ├── dashboard/
 │   ├── activity/
@@ -179,7 +179,7 @@ lib/
 
 ---
 
-## 🌿 Development Branches
+## Development Branches
 
 ### version-1
 
@@ -206,7 +206,7 @@ lib/
 
 ---
 
-## 🧪 Pengujian
+## Pengujian
 
 ### Functional Testing
 
@@ -231,7 +231,7 @@ lib/
 
 ---
 
-## 📑 Dokumentasi Pendukung
+## Dokumentasi Pendukung
 
 ### UX Board
 
@@ -243,7 +243,7 @@ https://www.figma.com/design/TwDCYzXnWOPllBSjJ2pFtA/UI-Monitoring-Pendapatan-Paj
 
 ---
 
-## 🚀 Cara Menjalankan Project
+## Cara Menjalankan Project
 
 ```bash
 git clone https://github.com/ifham-ux/Monitoring-Pendapatan-Pajak-Daerah.git
@@ -257,6 +257,3 @@ flutter run
 
 ---
 
-## 📄 Lisensi
-
-Dikembangkan untuk kebutuhan proyek akhir mata kuliah Mobile Application Development, Fakultas MIPA Universitas Gadjah Mada, 2026.
