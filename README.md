@@ -138,10 +138,8 @@ Video demonstrasi menampilkan:
 
 ### Link Video
 
-> 🚧 Placeholder – akan diperbarui setelah video final tersedia
-
 ```text
-https://youtu.be/VIDEO_DEMO_FINAL
+https://youtube.com/shorts/8T6sRz6BsO8
 ```
 
 ---
