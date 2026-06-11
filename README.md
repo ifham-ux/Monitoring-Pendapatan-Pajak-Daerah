@@ -148,22 +148,29 @@ https://youtube.com/shorts/8T6sRz6BsO8
 
 ```text
 lib/
-├── Views/
-│   ├── login/
-│   ├── dashboard/
-│   ├── activity/
-│   ├── overdue/
-│   ├── calculator/
-│   └── settings/
+├── Application/
+│   ├── android/
+│   ├── assets/
+│   ├── ios/
+│   ├── lib/
+│   │   ├── Models/
+│   │   ├── Services/
+│   │   ├── Utils/
+│   │   ├── Views/
+│   │   ├── Widgets/
+│   │   └── main.dart
+│   ├── linux/
+│   ├── macos/
+│   ├── test/
+│   ├── web/
+│   └── windows/
 │
-├── services/
-│   ├── api_service.dart
-│   ├── notification_service.dart
-│   └── hive_service.dart
-│
-├── models/
-├── widgets/
-└── main.dart
+├── backend/
+├── documents/
+├── presentation
+├── LICENSE
+└── README.md
+
 ```
 
 ---
