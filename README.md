@@ -84,7 +84,7 @@ Aplikasi ini dikembangkan sebagai **Mobile Dashboard Eksekutif** yang memungkink
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+## Teknologi yang Digunakan
 
 ### Frontend
 
