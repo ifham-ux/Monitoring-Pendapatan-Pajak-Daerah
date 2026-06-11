@@ -239,7 +239,7 @@ https://www.figma.com/design/TwDCYzXnWOPllBSjJ2pFtA/UI-Monitoring-Pendapatan-Paj
 
 ---
 
-## Cara Menjalankan Project
+## Cara Menjalankan
 
 ```bash
 git clone https://github.com/ifham-ux/Monitoring-Pendapatan-Pajak-Daerah.git
@@ -250,6 +250,4 @@ flutter pub get
 
 flutter run
 ```
-
----
 
